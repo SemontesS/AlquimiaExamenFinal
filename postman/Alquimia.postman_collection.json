@@ -1,0 +1,850 @@
+{
+  "info": {
+    "name": "Operacion Alquimia",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 [2.1] POST topsecret - 3 dispositivos a la vez",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/topsecret",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "topsecret"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"devices\": [\n    {\n      \"name\": \"STAR Labs\",\n      \"distance\": 851.47,\n      \"message\": [\n        \"el\",\n        \"laboratorio\",\n        \"\",\n        \"en\",\n        \"\",\n        \"muelle\"\n      ]\n    },\n    {\n      \"name\": \"CCPD\",\n      \"distance\": 291.55,\n      \"message\": [\n        \"\",\n        \"laboratorio\",\n        \"esta\",\n        \"\",\n        \"el\",\n        \"\"\n      ]\n    },\n    {\n      \"name\": \"S.T.A.R. Satellite\",\n      \"distance\": 380.79,\n      \"message\": [\n        \"el\",\n        \"\",\n        \"esta\",\n        \"en\",\n        \"\",\n        \"muelle\"\n      ]\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Posicion (350, -250)\", function () { const j = pm.response.json(); pm.expect(j.position.x).to.eql(350); pm.expect(j.position.y).to.eql(-250); });",
+              "pm.test(\"Mensaje reconstruido\", function () { pm.expect(pm.response.json().message).to.eql(\"el laboratorio esta en el muelle\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 [2.3] GET laboratory - sin datos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/laboratory",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "laboratory"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 [2.2] POST star-labs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/star-labs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "star-labs"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 851.47,\n  \"message\": [\n    \"el\",\n    \"laboratorio\",\n    \"\",\n    \"en\",\n    \"\",\n    \"muelle\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 201\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 [2.3] GET laboratory - solo 1 de 3",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/laboratory",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "laboratory"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 [2.2] POST ccpd",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 291.55,\n  \"message\": [\n    \"\",\n    \"laboratorio\",\n    \"esta\",\n    \"\",\n    \"el\",\n    \"\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 201\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 [2.2] POST star-satellite",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/star-satellite",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "star-satellite"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 380.79,\n  \"message\": [\n    \"el\",\n    \"\",\n    \"esta\",\n    \"en\",\n    \"\",\n    \"muelle\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 201\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 [2.3] GET laboratory - completo (350, -250)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/laboratory",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "laboratory"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Posicion (350, -250)\", function () { const j = pm.response.json(); pm.expect(j.position.x).to.eql(350); pm.expect(j.position.y).to.eql(-250); });",
+              "pm.test(\"Mensaje reconstruido\", function () { pm.expect(pm.response.json().message).to.eql(\"el laboratorio esta en el muelle\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 GET devices - lista (3)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Hay 3 dispositivos\", function () { pm.expect(pm.response.json().length).to.eql(3); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 POST star-labs repetido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/star-labs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "star-labs"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 851.47,\n  \"message\": [\n    \"el\",\n    \"laboratorio\",\n    \"\",\n    \"en\",\n    \"\",\n    \"muelle\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 409\", function () { pm.response.to.have.status(409); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 [2.4] PUT ccpd - reemplazo completo",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 150.0,\n  \"message\": [\n    \"x\",\n    \"y\",\n    \"z\",\n    \"w\",\n    \"v\",\n    \"u\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 GET ccpd - valores nuevos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Distancia 150 y mensaje nuevo\", function () { const j = pm.response.json(); pm.expect(j.distance).to.eql(150); pm.expect(j.message).to.eql([\"x\", \"y\", \"z\", \"w\", \"v\", \"u\"]); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 [2.5] PATCH ccpd - solo distancia 291.55",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 291.55\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 GET ccpd - mensaje conservado",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Distancia nueva y mensaje conservado\", function () { const j = pm.response.json(); pm.expect(j.distance).to.eql(291.55); pm.expect(j.message).to.eql([\"x\", \"y\", \"z\", \"w\", \"v\", \"u\"]); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 [2.5] PATCH ccpd - restaurar mensaje",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"message\": [\n    \"\",\n    \"laboratorio\",\n    \"esta\",\n    \"\",\n    \"el\",\n    \"\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15 [2.6] DELETE ccpd",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16 GET ccpd - ya no existe",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 404\", function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17 [2.3] GET laboratory - falta un dispositivo",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/laboratory",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "laboratory"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 422\", function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18 GET star-labs - sigue intacto",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/star-labs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "star-labs"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"STAR Labs intacto\", function () { pm.expect(pm.response.json().distance).to.eql(851.47); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "19 ERROR distancia negativa",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": -5,\n  \"message\": [\n    \"a\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 400\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "20 ERROR dispositivo desconocido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/arrow-cave",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "arrow-cave"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 5,\n  \"message\": [\n    \"a\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 400\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "21 ERROR PATCH vacio",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/star-labs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "star-labs"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 400\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "22 ERROR PUT sobre dispositivo sin datos",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/ccpd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            "ccpd"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 291.55,\n  \"message\": [\n    \"\",\n    \"laboratorio\",\n    \"esta\",\n    \"\",\n    \"el\",\n    \"\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Estado esperado 404\", function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1/alchemy"
+    }
+  ]
+}
