@@ -31,13 +31,13 @@ El dominio no importa nada de `org.springframework`, ni de `jakarta`. El `Global
 
 ## Documentación de diseño (SDD)
 
-En la carpeta `SDD/`:
+En la carpeta `DDD/`:
 
-- `SDD/domain/Domain Model.md`: modelo de dominio y reglas de negocio.
-- `SDD/domain/Domain Value Objects.md`: value objects.
-- `SDD/domain/Input-ports.md` y `SDD/domain/Output-ports.md`: puertos.
-- `SDD/domain/services/Domain Services.md`: servicios de dominio, trilateración y reconstrucción.
-- `SDD/adapters/REST API.md` y `SDD/adapters/Persistence.md`: adaptadores.
+- `DDD/domain/Domain Model.md`: modelo de dominio y reglas de negocio.
+- `DDD/domain/Domain Value Objects.md`: value objects.
+- `DDD/domain/Input-ports.md` y `SDD/domain/Output-ports.md`: puertos.
+- `DDD/domain/services/Domain Services.md`: servicios de dominio, trilateración y reconstrucción.
+- `DDD/adapters/REST API.md` y `SDD/adapters/Persistence.md`: adaptadores.
 
 ## Dispositivos
 
