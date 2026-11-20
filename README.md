@@ -2,7 +2,7 @@
 
 API REST (Java 17, Spring Boot 4.1.1) que localiza el laboratorio de Alchemy por **trilateración** y reconstruye el mensaje interceptado a partir de los fragmentos de tres dispositivos. Los datos viven solo en memoria. No usa base de datos ni servicios externos.
 
-## Cómo ejecutarlo
+## Para ejecutarlo
 
 ```powershell
 .\mvnw spring-boot:run     # o: mvn spring-boot:run
@@ -14,18 +14,18 @@ Servidor en `http://localhost:8080`.
 
 ```
 alquimia
-├── domain                       <- Java puro, sin Spring ni HTTP
-│   ├── models                   Point, SurveillanceDevice, Distance, MessageFragment, DeviceReport, SurveillanceResult
-│   ├── exceptions               errores de negocio (sin códigos HTTP)
+├── domain                      
+│   ├── models                  
+│   ├── exceptions               
 │   ├── ports
-│   │   ├── in                   un puerto por requerimiento (2.1 ... 2.6) + comando
-│   │   └── out                  DeviceReportRepository
-│   └── services                 TrilaterationService, MessageReconstructionService,
-│                                LaboratoryAnalysisService y un servicio por caso de uso
+│   │   ├── in                   
+│   │   └── out                 
+│   └── services                
+│                               
 ├── adapters
-│   ├── rest                     controlador, DTOs, mapeador y GlobalExceptionHandler (adaptador de entrada)
-│   └── persistence              InMemoryDeviceReportRepository (adaptador de salida)
-└── infrastructure/config        BeanConfig: único lugar donde se conecta el dominio con Spring
+│   ├── rest                     
+│   └── persistence              
+└── infrastructure/config        
 ```
 El dominio no importa nada de `org.springframework`, ni de `jakarta`. El `GlobalExceptionHandler` es quien convierte los errores de negocio en códigos HTTP.
 
